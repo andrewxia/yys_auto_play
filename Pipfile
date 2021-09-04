@@ -1,0 +1,15 @@
+[[source]]
+url = "http://pypi.douban.com/simple/"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyautogui = "*"
+mss = "*"
+opencv-python = "*"
+pydirectinput = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
