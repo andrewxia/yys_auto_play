@@ -1,3 +1,4 @@
+import math
 import cv2, numpy,time, os, random, threading
 import pyautogui
 import pydirectinput
@@ -96,6 +97,9 @@ def load_imgs():
     return imgs
 imgs = load_imgs()
 
+def point_distance(x1, y1, x2, y2):
+    return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+
  #在背景查找目标图片，以列表形式返回查找目标的中心坐标，
  #screen是截屏图片，wanted是找的图片【按上面load_imgs的格式】，show是否以图片形式显示匹配结果【调试用】
 def locate(screen, wanted, show=0):
@@ -109,14 +113,17 @@ def locate(screen, wanted, show=0):
     n,ex,ey = 1,0,0
     for pt in zip(*location[::-1]):   
         x,y = pt[0] + int(w/2), pt[1] + int(h/2)
-        if (x-ex) + (y-ey) < 15:  #去掉邻近重复的点
+        # if (x-ex) + (y-ey) < 15:  #去掉邻近重复的点
+        if point_distance(ex, ey, x, y) < 15:
+            # print("-------------------- debug: dropped nearby point %d, %d, ex,ey %d,%d for %s " % (x, y, ex, ey, c_name))
             continue
         ex,ey = x,y
 
         cv2.circle(screen, (x, y), 10, (0, 0, 255), 3)
-            
+
         x,y = int(x), int(y)
         loc_pos.append([x, y])
+        # print("-------------------- debug: added point %d, %d, ex,ey %d,%d for %s " % (x, y, ex, ey, c_name))
 
     if show:  #在图上显示寻找的结果，调试时开启
         cv2.imshow('we get', screen)

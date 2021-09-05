@@ -51,8 +51,9 @@ def auto_play_yuhun1(round=50):
 
 def auto_play_yuhun2(round=200):
     count = 0
-    while count < round:       
-        ar1 = ['n_default_invite', 'n_accept_all', 'n_accept_invite', 'n_confirm', 'n_shenli', 'n_done', 'n_tiaozhan']
+    iter = 0
+    while count < round:
+        ar1 = ['xz_invite_decline', 'n_default_invite', 'n_accept_all', 'n_accept_invite', 'n_confirm', 'n_shenli', 'n_done', 'n_tiaozhan']
         re = player.find_touch_all(ar1)
         if re == 'n_tiaozhan':
             count += 1
@@ -68,6 +69,9 @@ def auto_play_yuhun2(round=200):
             if re == 'n_zidong':
                 print('战斗中...')
                 time.sleep(5)
+        iter += 1
+        if iter % 10 == 0:
+            print("=============== 当前已完成 %d / %d 轮，共迭代 %d 次 ==============" % (count, round, iter))
 
 def auto_play_tupo(round=20):
     count = 0
