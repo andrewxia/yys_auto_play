@@ -1,4 +1,6 @@
 import time, os
+
+from numpy import true_divide
 import auto_player as player
 
 def get_pictures():   
@@ -107,34 +109,27 @@ def auto_play_tupo(round=20):
                     time.sleep(3)
     print("Finished %d round" % (count))
 
-def tupo_check_refresh():
-    need_refesh = ['tupo_check_refresh', 'tupo_check_refresh1']
-
-
-
 def auto_play_tupo1(playernum=1):
     round = playernum * 30
     count = 0
     tp_start = ['tupo_target', 'tupo_attack']
     while count < round:
-        fight_status = player.find_touch_all(['tupo_ready1', 'tupo_ready2', 'tupo_ready3', 'tupo_fail', 'tupo_success', 'tupo_reward'])
+        fight_status = player.find_touch_all(['tupo_ready1', 'tupo_ready2', 'tupo_ready3',
+                                            'tupo_fail', 'tupo_success', 'tupo_reward'],
+                                            True, True, True)
         if fight_status == 'tupo_success':
             print('突破胜利...')
-            time.sleep(2)
         elif fight_status == 'tupo_fail':
             print('突破失败...')
-            time.sleep(2)
         elif fight_status is None:
             fight_status = player.find_touch_all(['tupo_auto'], False)
             if fight_status == 'tupo_auto':
                 print('战斗中...')
-                time.sleep(3)
 
         re = player.cascade_find_touch(tp_start)
         if re == tp_start:
             count += 1
             print('********* 开始第 %d 轮，  共 %d 轮***' % (count, round))
-            time.sleep(2)
 
         re_list = player.tupo_check_refresh()
         if re_list:

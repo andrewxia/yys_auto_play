@@ -190,9 +190,14 @@ def find_touch_any(target_list, tap=True):
             print('N 未找到目标', target)
     return re
 
-
-#寻找并点击,找到返回目标名，未找到返回NONE
-def find_touch_all(target_list, tap=True, tapall=True):
+#
+# 寻找并点击,找到返回目标名，未找到返回NONE
+# tap 是否点击找到的目标
+# tapall 同一目标找到多个，是否都点击
+# all_target targe_list的所有目标是否都找一遍，默认False, 找到一个目标，后面的目标不继续找
+#           （目标有优先级，比如组队御魂，挑战需要最后点，以防其他队友还没有准备好）
+#
+def find_touch_all(target_list, tap=True, tapall=True, all_target=False):
     screen = screen_shot()
     print('目标列表 ', target_list)
     re = None
@@ -214,9 +219,8 @@ def find_touch_all(target_list, tap=True, tapall=True):
                     touch(xx)
                     random_delay(0.2,0.3)
             re = target
-            break
-        # else:
-        #     print('N 未找到目标', target)
+            if not all_target:
+                break
     return re
 
 #
