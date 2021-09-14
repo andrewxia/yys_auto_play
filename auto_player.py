@@ -230,6 +230,14 @@ def find_touch_all(target_list, tap=True, tapall=True, all_target=False):
                 break
     return re
 
+def find_locations(target):
+    screen = screen_shot()
+    print('寻找目标位置 ', target)
+    re = None
+    wanted = imgs[target]
+    pts = locate(screen, wanted)
+    return pts
+
 #
 # 级联查找目标列表，每个目标找到多个，只点击第一个，然后继续查找下一个目标
 #

@@ -113,11 +113,31 @@ def auto_play_tupo(round=20):
                     time.sleep(3)
     print("Finished %d round" % (count))
 
+def merge_ticket_window(wind_list1, wind_list2):
+    return []
+
+def same_ticket_window(wind_list1, wind_list2):
+    return False
+
 def auto_play_tupo1(playernum=1):
     round = playernum * 30
     count = 0
     tp_start = ['tupo_target', 'tupo_attack']
-    while count < round:
+    tickets_winds = []
+    zero_winds = []
+    while count < round or not same_ticket_window(tickets_winds, zero_winds):
+        if not tickets_winds or count % 5 == 0:
+            ticket_pts = player.find_locations('tupo_ticket')
+            zero_pts = player.find_locations('tupo_zero_ticket')
+            if ticket_pts:
+                tickets_winds = merge_ticket_window(tickets_winds, ticket_pts)
+            else:
+                print("当前屏幕没有突破票图案.....")
+            if zero_pts:
+                zero_winds = merge_ticket_window(zero_winds, zero_pts)
+            else:
+                print("当前屏幕没有*零*突破票图案.....")
+
         fight_status = player.find_touch_all(['tupo_ready1', 'tupo_ready2', 'tupo_ready3',
                                             'tupo_fail', 'tupo_success', 'tupo_reward'],
                                             True, True, True)
