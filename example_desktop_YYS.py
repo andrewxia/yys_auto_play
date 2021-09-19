@@ -117,10 +117,10 @@ def merge_ticket_window(wind_list1, wind_list2):
     return []
 
 def same_ticket_window(wind_list1, wind_list2):
-    return False
+    return True
 
 def auto_play_tupo1(playernum=1):
-    round = playernum * 30
+    round = playernum * 60 # 输了不减票，打60次
     count = 0
     tp_start = ['tupo_target', 'tupo_attack']
     tickets_winds = []
